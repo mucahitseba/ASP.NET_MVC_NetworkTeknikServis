@@ -1,4 +1,5 @@
-﻿<section id="header">
+﻿@using NetworkTeknikServis.BLL.Identity
+<section id="header">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -91,7 +92,13 @@
                             <li><a href="contactus-4.html">Contact Us 4</a></li>
                         </ul>
                     </li>
-                    <li><a href="shop-cart.html"><i class="fa fa-shopping-cart fa-fw"></i> Cart (2)</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="shop-cart.html"><i class="fa fa-shopping-cart fa-fw"></i> Cart </a></li>
+                            <li><a href=@Url.Action("Logout","Account")><i class="fa fa-sign-out"></i> Logout </a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

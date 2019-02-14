@@ -9,11 +9,12 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public ActionResult Error()
         {
             return View();
