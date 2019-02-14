@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using NetworkTeknikServis.BLL.Helpers;
+using NetworkTeknikServis.BLL.Services.Senders;
 using NetworkTeknikServis.MODELS.IdentityModels;
 using NetworkTeknikServis.MODELS.ViewModels;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
@@ -48,7 +50,8 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     UserName = rm.UserName,
                     Email = rm.Email,
                     Name = rm.Name,
-                    Surname = rm.Surname
+                    Surname = rm.Surname,
+                    ActivationCode = StringHelper.GetCode()
                 };
                 var result = await userManager.CreateAsync(newUser, rm.Password);
                 if (result.Succeeded)
@@ -62,6 +65,12 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                         await userManager.AddToRoleAsync(newUser.Id, "User");
                     }
                     //todo kullanıcıya mail gönderilsin
+                    string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                                     (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                    var emailService = new EmailService();
+                    var body = $"Merhaba <b>{newUser.Name} {newUser.Surname}</b><br>Hesabınızı aktif etmek için aşadıdaki linke tıklayınız<br> <a href='{SiteUrl}/account/activation?code={newUser.ActivationCode}' >Aktivasyon Linki </a> ";
+                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" }, newUser.Email);
                 }
                 else
                 {
@@ -236,6 +245,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 model.UserProfileViewModel = data.UserProfileViewModel;
                 if (!ModelState.IsValid)
                 {
+                    model.ChangePasswordViewModel = new ChangePasswordViewModel();
                     return View("UserProfile", model);
                 }
 
@@ -257,6 +267,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                         err += resultError + " ";
                     }
                     ModelState.AddModelError("", err);
+                    model.ChangePasswordViewModel = new ChangePasswordViewModel();
                     return View("UserProfile", model);
                 }
             }
@@ -271,6 +282,41 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 };
                 return RedirectToAction("Error", "Home");
             }
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Activation(string code)
+        {
+            try
+            {
+                var userStore = NewUserStore();
+                var user = userStore.Users.FirstOrDefault(x => x.ActivationCode == code);
+
+                if (user != null)
+                {
+                    if (user.EmailConfirmed)
+                    {
+                        ViewBag.Message = $"<span class='alert alert-success'>Bu hesap daha önce aktive edilmiştir.</span>";
+                    }
+                    else
+                    {
+                        user.EmailConfirmed = true;
+
+                        userStore.Context.SaveChanges();
+                        ViewBag.Message = $"<span class='alert alert-success'>Aktivasyon işleminiz başarılı</span>";
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = $"<span class='alert alert-danger'>Aktivasyon başarısız</span>";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "<span class='alert alert-danger'>Aktivasyon işleminde bir hata oluştu</span>";
+            }
+
+            return View();
         }
     }
 }
