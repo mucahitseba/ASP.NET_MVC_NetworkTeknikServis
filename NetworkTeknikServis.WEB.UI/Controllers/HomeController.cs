@@ -13,5 +13,10 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         {
             return View();
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }
