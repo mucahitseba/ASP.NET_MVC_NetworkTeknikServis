@@ -398,6 +398,7 @@
     <Content Include="vendor\font-awesome\fonts\fontawesome-webfontd41d.eot" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
