@@ -67,6 +67,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +82,7 @@
     <Compile Include="Enums\MessageStates.cs" />
     <Compile Include="IdentityModels\Role.cs" />
     <Compile Include="IdentityModels\User.cs" />
+    <Compile Include="Models\ResponseData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ErrorViewModel.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="ViewModels\RecoverPasswordViewModel.cs" />
     <Compile Include="ViewModels\RegisterLoginViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\UpdateUserRoleViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

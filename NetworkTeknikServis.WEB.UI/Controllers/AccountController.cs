@@ -14,6 +14,7 @@ using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 
 namespace NetworkTeknikServis.WEB.UI.Controllers
 {
+    [RequireHttps]
     public class AccountController : Controller
     {
         // GET: Account
