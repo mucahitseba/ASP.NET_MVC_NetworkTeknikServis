@@ -22,6 +22,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Home</a>
                         </li>
                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arıza Takip</a>
+                        </li>
+                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
                             <ul class="dropdown-menu">
                                 <li><a href="@Url.Action("UserProfile", "Account")"><i class="fa fa-shopping-cart fa-fw"></i> Profil </a></li>
@@ -36,19 +39,19 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="index-2.html">Homepage 1</a></li>
-                                <li><a href="index-3.html">Homepage 2</a></li>
-                                <li><a href="index-4.html">Homepage 3</a></li>
-                                <li><a href="index-5.html">Homepage 4</a></li>
-                                <li><a href="index-6.html">Home 5 (Full Carousel)</a></li>
-                            </ul>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ürünler</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="@Url.Action("CreateRecord", "Customer")" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arıza Bildir</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
                             <ul class="dropdown-menu">
                                 <li><a href="@Url.Action("UserProfile", "Account")"><i class="fa fa-shopping-cart fa-fw"></i> Profil </a></li>
+                                <li><a href=@Url.Action("GetMyRecords", "Customer")><i class="fa fa-sign-out"></i>Arıza Kayıtlarım</a></li>
                                 <li><a href=@Url.Action("Logout", "Account")><i class="fa fa-sign-out"></i> Logout </a></li>
                             </ul>
                         </li>
@@ -108,7 +111,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Func</a>
                             <ul class="dropdown-menu">
                                 <li><a href="index-2.html">Homepage 1</a></li>
                                 <li><a href="index-3.html">Homepage 2</a></li>
