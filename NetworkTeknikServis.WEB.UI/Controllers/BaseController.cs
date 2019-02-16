@@ -42,5 +42,11 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 });
             return data;
         }
+
+        //protected List<SelectListItem> GetFaultList()
+        //{
+        //    var data = new List<SelectListItem>();
+
+        //}
     }
 }

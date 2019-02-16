@@ -20,8 +20,8 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+            if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated && HttpContext.GetOwinContext().Authentication.User.IsInRole("Admin"))
+                return RedirectToAction("Index", "Admin");
             return View();
         }
         [HttpPost]
@@ -116,13 +116,24 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     return View("Index", model);
                 }
                 var authManager = HttpContext.GetOwinContext().Authentication;
-                var userIdentity =
-                    await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                var userIdentity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                 authManager.SignIn(new AuthenticationProperties()
                 {
                     IsPersistent = model.LoginViewModel.RememberMe
                 }, userIdentity);
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("Index","Account");
+                //if (HttpContext.GetOwinContext().Authentication.User.IsInRole("Admin"))
+                //    return RedirectToAction("Index", "Admin");
+                //else if (HttpContext.GetOwinContext().Authentication.User.IsInRole("Operator"))
+                //    return RedirectToAction("Index", "Operator");
+                //else if (HttpContext.GetOwinContext().Authentication.User.IsInRole("Technician"))
+                //    return RedirectToAction("Index", "Technician");
+                //else if (HttpContext.GetOwinContext().Authentication.User.IsInRole("Customer"))
+                //    return RedirectToAction("Index", "Customer");
+                //else
+                //    return RedirectToAction("Index", "Home");
+
             }
             catch (Exception ex)
             {

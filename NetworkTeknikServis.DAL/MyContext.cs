@@ -2,9 +2,11 @@
 using NetworkTeknikServis.MODELS.IdentityModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetworkTeknikServis.MODELS.Entities;
 
 namespace NetworkTeknikServis.DAL
 {
@@ -15,5 +17,7 @@ namespace NetworkTeknikServis.DAL
         {
             this.InstanceDate = DateTime.Now;
         }
+
+        public virtual DbSet<Fault> Faults { get; set; }
     }
 }
