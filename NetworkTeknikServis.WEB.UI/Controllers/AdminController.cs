@@ -117,6 +117,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult EditUser(string id)
         {
             try
@@ -201,7 +202,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     img.Resize(250, 250, false);
                     img.AddTextWatermark("Wissen");
                     img.Save(dosyayolu);
-                    var oldPath = user.AvatarPath;
+                    var oldPath = string.IsNullOrEmpty(user.AvatarPath) ? "/assets/img/avatars/avatar3.jpg" : user.AvatarPath;
                     user.AvatarPath = "/Upload/" + fileName + extName;
 
                     System.IO.File.Delete(Server.MapPath(oldPath));
