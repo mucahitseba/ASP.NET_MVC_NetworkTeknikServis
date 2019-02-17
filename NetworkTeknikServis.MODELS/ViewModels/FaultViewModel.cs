@@ -1,18 +1,15 @@
-﻿using System;
+﻿using NetworkTeknikServis.MODELS.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NetworkTeknikServis.MODELS.Enums;
-using NetworkTeknikServis.MODELS.IdentityModels;
 
-namespace NetworkTeknikServis.MODELS.Entities
+namespace NetworkTeknikServis.MODELS.ViewModels
 {
-    [Table("Faults")]
-    public class Fault
+    public class FaultViewModel
     {
         [Key]
         [DisplayName("Arıza ID")]
@@ -25,7 +22,7 @@ namespace NetworkTeknikServis.MODELS.Entities
         [DisplayName("Teknisyen ID")]
         public string TechnicianId { get; set; } = String.Empty;
         [DisplayName("Arıza Bildirim Tarihi")]
-        public DateTime FaultNotifyDate { get; set; }=DateTime.Now;
+        public DateTime FaultNotifyDate { get; set; } = DateTime.Now;
 
         [DisplayName("Arıza Sonuçlanma Tarihi")]
         public DateTime? FaultResultDate { get; set; }
@@ -38,8 +35,5 @@ namespace NetworkTeknikServis.MODELS.Entities
         //todo view modelyapcaksın bu alanı resim için.
         [DisplayName("Fatura Resmini Ekleyiniz")]
         public string InvoicePath { get; set; }
-
-
-
     }
 }
