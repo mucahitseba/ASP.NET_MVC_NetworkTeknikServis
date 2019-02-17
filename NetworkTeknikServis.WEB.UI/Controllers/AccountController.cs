@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using NetworkTeknikServis.BLL.Helpers;
 using NetworkTeknikServis.BLL.Services.Senders;
+using NetworkTeknikServis.MODELS.Enums;
 using NetworkTeknikServis.MODELS.IdentityModels;
 using NetworkTeknikServis.MODELS.ViewModels;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
@@ -22,6 +23,16 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         {
             if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated && HttpContext.GetOwinContext().Authentication.User.IsInRole("Admin"))
                 return RedirectToAction("Index", "Admin");
+
+            if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated && HttpContext.GetOwinContext().Authentication.User.IsInRole("Operator"))
+                return RedirectToAction("Index", "Operator");
+
+            if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated && HttpContext.GetOwinContext().Authentication.User.IsInRole("Customer"))
+                return RedirectToAction("Index", "Customer");
+
+            if (HttpContext.GetOwinContext().Authentication.User.Identity.IsAuthenticated && HttpContext.GetOwinContext().Authentication.User.IsInRole("Technician"))
+                return RedirectToAction("Index", "Technician");
+
             return View();
         }
         [HttpPost]
@@ -59,11 +70,11 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 {
                     if (userStore.Users.Count() == 1)
                     {
-                        await userManager.AddToRoleAsync(newUser.Id, "Admin");
+                        await userManager.AddToRoleAsync(newUser.Id, Enum.GetName(typeof(IdentityRoles),IdentityRoles.Admin));
                     }
                     else
                     {
-                        await userManager.AddToRoleAsync(newUser.Id, "User");
+                        await userManager.AddToRoleAsync(newUser.Id, Enum.GetName(typeof(IdentityRoles), IdentityRoles.Customer));
                     }
                     //todo kullanıcıya mail gönderilsin
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
