@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace NetworkTeknikServis.MODELS.ViewModels
 {
@@ -32,8 +33,15 @@ namespace NetworkTeknikServis.MODELS.ViewModels
         public bool AssignedOperator { get; set; } = false;
         [DisplayName("Ürün Resmi Ekleyiniz :")]
         public string FaultPath { get; set; }
+        [DisplayName("Arızali Ürün Resmini Ekleyiniz :")]
+        public HttpPostedFileBase PostedFileFault { get; set; }
         //todo view modelyapcaksın bu alanı resim için.
         [DisplayName("Fatura Resmini Ekleyiniz")]
         public string InvoicePath { get; set; }
+        [DisplayName("Ürünün Fatura Resmini Ekleyiniz.")]
+        public HttpPostedFileBase PostedFileInvoice { get; set; }
+        public string FaultDescription { get; set; }
+        public string Adress { get; set; }
+
     }
 }

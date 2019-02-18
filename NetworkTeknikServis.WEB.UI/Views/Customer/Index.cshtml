@@ -1,8 +1,143 @@
-﻿
+﻿@using NetworkTeknikServis.BLL.Identity
+@model NetworkTeknikServis.MODELS.ViewModels.FaultViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
+<h2 class="section-title">Wizards with Progress</h2>
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <!-- Simple Classic Progress Wizard (.js-wizard-simple class is initialized in js/pages/base_forms_wizard.js) -->
+        <!-- For more examples please check http://vadimg.com/twitter-bootstrap-wizard-example/ -->
+        <div class="card js-wizard-simple">
+            <!-- Step Tabs -->
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active">
+                    <a href="#simple-classic-progress-step1" data-toggle="tab">Bilgiler</a>
+                </li>
+                <li>
+                    <a href="#simple-classic-progress-step2" data-toggle="tab">Konum?</a>
+                </li>
+                <li>
+                    <a href="#simple-classic-progress-step3" data-toggle="tab">Resim Yükleme</a>
+                </li>
+            </ul>
+            <!-- End Step Tabs -->
+            <!-- Form -->
+            <div>
+                <p class="text-muted">@Html.ValidationSummary()</p>
+                <h3>@TempData["Message"]</h3>
+            </div>
 
-<h2>Müşteri Sayfası</h2>
+
+            @using (Html.BeginForm("FaultCreate", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <!-- Steps Progress -->
+                <div class="card-block b-b">
+                    <div class="wizard-progress progress progress-mini m-b-0">
+                        <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+                    </div>
+                </div>
+                <!-- End Steps Progress -->
+                <!-- Steps Content -->
+                <div class="card-block tab-content">
+                    <!-- Step 1 -->
+                    <div class="tab-pane fade fade-up in m-t-md m-b-lg active" id="simple-classic-progress-step1">
+                        
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                @*Todo For dedigimiz nedir nasılveilir. HOCAYA SOR*@
+                                @*<label for="simple-classic-progress-firstname">First Name</label>*@
+                                @Html.LabelFor(x => x.FaultDescription)
+                                @*<input class="form-control" type="text" id="simple-classic-progress-firstname" name="simple-classic-progress-firstname" placeholder="Please enter your first name"/>*@
+                                @Html.TextBoxFor(x => x.FaultDescription, new { @class = "form-control", type = "text", placeholder = "Lütfen Arıza Hakkında Açıklama Yapiniz" })
+                                
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <!-- End Step 1 -->
+                    <!-- Step 2 -->
+                    <div class="tab-pane fade fade-up m-t-md m-b-lg" id="simple-classic-progress-step2">
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+
+                                @Html.LabelFor(x => x.Adress)
+
+                                @Html.TextBoxFor(x => x.Adress, new { @class = "form-control", type = "text", placeholder = "Adres Giriniz" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Step 2 -->
+                    <!-- Step 3 -->
+                    <div class="tab-pane fade fade-up m-t-md m-b-lg" id="simple-classic-progress-step3">
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                @Html.LabelFor(x => x.PostedFileFault)
+                                @Html.TextBoxFor(x => x.PostedFileFault, new { @class = "form-control", type = "file", multiple = false })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                @Html.LabelFor(x => x.PostedFileInvoice)
+                                @Html.TextBoxFor(x => x.PostedFileInvoice, new { @class = "form-control", type = "file", multiple = false })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <label class="css-input switch switch-sm switch-primary" for="simple-classic-progress-terms">
+                                    <input type="checkbox" id="simple-classic-progress-terms" name="simple-classic-progress-terms"><span></span> Teşekkürler--@MembershipTools.GetNameSurname(null)<a data-toggle="modal" data-target="#modal-terms" href="#">terms</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Step 3 -->
+                </div>
+                <!-- End Steps Content -->
+                <!-- Steps Navigation -->
+                <div class="card-block b-t">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="wizard-prev btn btn-default" type="button">Önceki</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="wizard-next btn btn-default" type="button">Sonraki</button>
+                            <button class="wizard-finish btn btn-app" type="submit" id="kaydetx"><i class="ion-checkmark m-r-xs"></i> Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Steps Navigation -->
+            }
+            <!-- End Form -->
+        </div>
+        <!-- .card -->
+        <!-- End Simple Classic Progress Wizard -->
+    </div>
+    <!-- .col-lg-6 -->
+    <!-- .col-lg-6 -->
+</div>
+@section bottom
+{
+    <!-- Page JS Plugins -->
+    <script src="~/assets/js/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!-- Page JS Code -->
+    <script src="~/assets/js/pages/base_forms_wizard.js"></script>
+    <script>
+        $(function () {
+            $("#kaydetx").click(function () {
+                $.notify({
+                    message: "Kaydınız Alınmıştır. Teşekkür ederiz.",
+                    title: "Servis MESAJI -",
+                    type:"success"
+                    type: "success"
+                });
+            });
+        })
+    </script>
+}
 

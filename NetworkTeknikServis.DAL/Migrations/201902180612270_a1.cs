@@ -3,7 +3,7 @@ namespace NetworkTeknikServis.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class a2 : DbMigration
+    public partial class a1 : DbMigration
     {
         public override void Up()
         {
@@ -19,6 +19,8 @@ namespace NetworkTeknikServis.DAL.Migrations
                         FaultResultDate = c.DateTime(),
                         FaultState = c.Int(nullable: false),
                         AssignedOperator = c.Boolean(nullable: false),
+                        FaultPath = c.String(),
+                        InvoicePath = c.String(),
                     })
                 .PrimaryKey(t => t.FaultID);
             

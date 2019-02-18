@@ -38,6 +38,8 @@ namespace NetworkTeknikServis.MODELS.Entities
         //todo view modelyapcaksın bu alanı resim için.
         [DisplayName("Fatura Resmini Ekleyiniz")]
         public string InvoicePath { get; set; }
+        public string FaultDescription { get; set; }
+        public string Adress { get; set; }
 
 
 
