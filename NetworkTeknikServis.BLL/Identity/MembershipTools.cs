@@ -41,6 +41,15 @@ namespace NetworkTeknikServis.BLL.Identity
 
             return $"{user.Name} {user.Surname}";
         }
+        public static User GetMusteri(string UserId)
+        {
+            //if (string.IsNullOrEmpty(UserId))
+            //    //return "/assets/img/avatars/avatar3.jpg";
+
+            var MusteriUser = NewUserManager().FindById(UserId);
+
+            return MusteriUser;
+        }
 
     }
 

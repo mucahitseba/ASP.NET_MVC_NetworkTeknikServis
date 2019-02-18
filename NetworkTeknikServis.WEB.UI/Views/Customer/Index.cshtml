@@ -1,4 +1,5 @@
-﻿@using NetworkTeknikServis.BLL.Identity
+﻿@using Microsoft.AspNet.Identity
+@using NetworkTeknikServis.BLL.Identity
 @model NetworkTeknikServis.MODELS.ViewModels.FaultViewModel
 @{
     ViewBag.Title = "Index";
@@ -33,6 +34,7 @@
             @using (Html.BeginForm("FaultCreate", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
+                @Html.Hidden("CustomerId", HttpContext.Current.User.Identity.GetUserId())
                 <!-- Steps Progress -->
                 <div class="card-block b-b">
                     <div class="wizard-progress progress progress-mini m-b-0">
@@ -44,7 +46,7 @@
                 <div class="card-block tab-content">
                     <!-- Step 1 -->
                     <div class="tab-pane fade fade-up in m-t-md m-b-lg active" id="simple-classic-progress-step1">
-                        
+
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">
                                 @*Todo For dedigimiz nedir nasılveilir. HOCAYA SOR*@
@@ -52,11 +54,11 @@
                                 @Html.LabelFor(x => x.FaultDescription)
                                 @*<input class="form-control" type="text" id="simple-classic-progress-firstname" name="simple-classic-progress-firstname" placeholder="Please enter your first name"/>*@
                                 @Html.TextBoxFor(x => x.FaultDescription, new { @class = "form-control", type = "text", placeholder = "Lütfen Arıza Hakkında Açıklama Yapiniz" })
-                                
+
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                     <!-- End Step 1 -->
                     <!-- Step 2 -->
@@ -128,16 +130,16 @@
     <!-- Page JS Code -->
     <script src="~/assets/js/pages/base_forms_wizard.js"></script>
     <script>
-        $(function () {
-            $("#kaydetx").click(function () {
-                $.notify({
-                    message: "Kaydınız Alınmıştır. Teşekkür ederiz.",
-                    title: "Servis MESAJI -",
-                    type:"success"
-                    type: "success"
-                });
-            });
-        })
+       // $(function () {
+         //   $("#kaydetx").click(function () {
+         //       $.notify({
+         //           message: "Kaydınız Alınmıştır. Teşekkür ederiz.",
+         //           title: "Servis MESAJI -",
+         //           type:"success"
+          //          type: "success"
+          //      });
+           // });
+      //  })
     </script>
 }
 
