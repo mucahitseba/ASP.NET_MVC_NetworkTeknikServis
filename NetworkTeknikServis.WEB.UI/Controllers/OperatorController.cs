@@ -35,7 +35,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             }).ToList();
             return View(data);
         }
-
+        
         public async Task<ActionResult> ConfirmFault(Guid id)
         {
             try
@@ -72,5 +72,14 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
+        [HttpGet]
+        public ActionResult FaultTracking(string id)
+        {
+            var data = new FaultRepo().GetAll(x => x.OperatorId == id).ToList();
+            return View(data);
+        }
+
+
     }
 }

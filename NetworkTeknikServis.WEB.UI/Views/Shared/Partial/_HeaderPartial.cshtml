@@ -1,4 +1,5 @@
 ﻿@using NetworkTeknikServis.BLL.Identity
+@using Microsoft.AspNet.Identity
 <section id="header">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -63,10 +64,10 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
+                            <a href="@Url.Action("Index","Operator")" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arıza Takip</a>
+                            <a href="@Url.Action("FaultTracking","Operator",new { id = HttpContext.Current.User.Identity.GetUserId() })" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Arıza Takip</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
