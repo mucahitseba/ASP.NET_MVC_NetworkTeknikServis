@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
+using NetworkTeknikServis.MODELS.Models;
 using NetworkTeknikServis.MODELS.ViewModels;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 
@@ -20,7 +21,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         {
             var data = new FaultRepo().GetAll(x => x.AssignedOperator == false).Select(x => new FaultViewModel()
             {
-                Adress =x.Adress,
+                Adress = x.Adress,
                 FaultPath = x.FaultPath,
                 FaultDescription = x.FaultDescription,
                 AssignedOperator = x.AssignedOperator,
@@ -35,7 +36,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             }).ToList();
             return View(data);
         }
-        
+
         public async Task<ActionResult> ConfirmFault(Guid id)
         {
             try
@@ -54,7 +55,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
 
                     var emailService = new EmailService();
                     var body = $"Merhaba <b>{customer.Name} {customer.Surname}</b><br>Arıza talebiniz onaylanmıştır.";
-                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" },customer.Email);
+                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" }, customer.Email);
                 }
 
                 TempData["Message"] = $"Arıza talebi onaylanmıştır";
@@ -79,6 +80,32 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             var data = new FaultRepo().GetAll(x => x.OperatorId == id).ToList();
             return View(data);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetDetail(Guid id)
+        {
+            try
+            {
+                var fault = new FaultRepo().GetById(id);
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+                var user = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
+
+                return Json(new ResponseData()
+                {
+                    data = new { fault, user, customer },
+                    success = true,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResponseData()
+                {
+                    success = false,
+                    message = $"Bir hata olustu {ex.Message}"
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
 
     }

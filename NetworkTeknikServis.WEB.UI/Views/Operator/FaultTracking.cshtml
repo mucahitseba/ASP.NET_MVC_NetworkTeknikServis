@@ -22,64 +22,111 @@
 
     <!-- Main CSS-->
     <link href="~/assets/css/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/r-2.2.2/sc-1.5.0/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" />
 }
 
-<div class="row">
-    <div class="card">
-        <div class="card-header">
+    <div class="container col-md-offset-1">
+        <div class="row" id="tablediv">
+            <div class="card">
+                <div class="card-header">
 
-        </div>
-        <div class="card-block">
-            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-            <table class="table table-bordered table-striped table-vcenter dataTable">
-                <thead>
-                    <tr>
-                        <th class="text-center">Arıza No</th>
-                        <th>Kayıt Oluşturan Ad</th>
-                        <th>Kayıt Oluşturan Soyad</th>
-                        <th>Eklendigi Tarih</th>
-                        <th>Adres</th>
-                        <th>Arıza Açıklaması</th>
-                        <th class="text-center" style="width: 10%;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Count; i++)
-                    {
+                </div>
+                <div class="card-block">
+                    <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                    <table class="table table-bordered table-striped table-vcenter dataTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Arıza No</th>
+                                <th>Kayıt Oluşturan Ad</th>
+                                <th>Kayıt Oluşturan Soyad</th>
+                                <th>Eklendigi Tarih</th>
+                                <th>Adres</th>
+                                <th>Arıza Açıklaması</th>
+                                <th class="text-center" style="width: 10%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                        {
 
-                        var data = MembershipTools.GetMusteri(Model[i].CustomerId);
-                        var data2 = Model[i];
-                        @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                        <tr class="@(data2.AssignedOperator? "":"bg-red")">
-                            <td class="text-center">@data2.FaultID</td>
-                            <td>@data.Name</td>
-                            <td>@data.Surname</td>
-                            <td>@data2.FaultNotifyDate</td>
-                            <td>@data2.Adress</td>
-                            <td>@data2.FaultDescription</td>
+                            var data = MembershipTools.GetMusteri(Model[i].CustomerId);
+                            var data2 = Model[i];
+                            @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
+                            <tr class="@(data2.AssignedOperator? "":"bg-red")">
+                                <td class="text-center" id="faultid">@data2.FaultID</td>
+                                <td>@data.Name</td>
+                                <td>@data.Surname</td>
+                                <td>@data2.FaultNotifyDate</td>
+                                <td>@data2.Adress</td>
+                                <td>@data2.FaultDescription</td>
 
 
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="@Url.Action("ConfirmFault", "Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Onayla">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        @*<a href="@Url.Action("ConfirmFault", "Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Atama Yap" id="getdetail">*@
+                                        <button type="button" class="btn btn-xs btn-action btnatamayap" style="background-color:cadetblue" title="Atama Yap" name="@data2.FaultID">
+                                            <i class="glyphicon glyphicon-transfer"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
                     }
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- .card-block -->
+            </div>
         </div>
-        <!-- .card-block -->
+    </div>
+
+<div class="page-wrapper bg-gray p-t-100 p-b-100 font-robo" id="detaildiv">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-1">
+            <div class="card-body">
+                <br />
+                <h2 class="title">Arıza Detay Sayfası</h2>
+                <form method="POST">
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Fault ID" id="faultID">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Customer Name" id="Cname">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Customer Surname" id="Csurname">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Adress" id="adress">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Fault Description" id="desc">
+                    </div>
+
+                    <div class="input-group col-md-12">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="gender">
+                                <option disabled="disabled" selected="selected">Teknisyen Seç..</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="p-t-20 col-md-offset-9">
+                        <button class="btn btn--radius btn--blue" type="submit">Atama Yap</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
 
 @section bottom
 {
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/r-2.2.2/sc-1.5.0/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" />
+
     <script src="~/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <script src="~/assets/vendor/select2/select2.min.js"></script>
@@ -89,16 +136,49 @@
     <!-- Main JS-->
     <script src="~/assets/js/global.js"></script>
 
-
+    <script src="~/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
 
     <script>
         $(function () {
+            $("#detaildiv").hide();
+
             $(".dataTable").DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
+
+            var arr = [];
+            @foreach (var item in Model)
+                        {
+                            @:arr.push({ FaultID:'@item.FaultID', FaultDescription :'@item.FaultDescription',Adress:'@item.Adress'})
+                        }
+            console.log(arr);
+
+            $(".btnatamayap").click(function (ev) {
+                    $("#detaildiv").toggle();
+                    $("#tablediv").toggle();
+                    var id = $(this).attr("name");
+                    $.ajax({
+                        url: '@Url.Action("GetDetail", "Operator")' + "?id=" + id,
+                        method: "get",
+                        dataType: "json",
+                    }).done(function (e) {
+                        if (e.data != null) {
+                            var data = e.data;
+                            $("#faultID").val(data.fault.FaultID);
+                            $("#Cname").val(data.customer.Name);
+                            $("#Csurname").val(data.customer.Surname);
+                            $("#adress").val(data.fault.Adress);
+                            $("#desc").val(data.fault.FaultDescription);
+                            alert(data.customer.Name);
+                            $("#tablediv").hide();
+                            $("#detaildiv").show(600);
+                        }
+                    });
+                });
+
         });
     </script>
 
