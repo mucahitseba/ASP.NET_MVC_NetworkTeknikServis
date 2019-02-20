@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace NetworkTeknikServis.WEB.UI.Controllers
 {
-    [Authorize(Roles = "Technician")]
+    //[Authorize(Roles = "Technician")]
+    [Authorize]
     public class TechnicianController : Controller
     {
         // GET: Technician

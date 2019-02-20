@@ -13,6 +13,15 @@
 
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="~/assets/js/plugins/datatables/jquery.dataTables.min.css" />
+
+    <link href="~/assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/assets/css/main.css" rel="stylesheet" media="all">
 }
 
 <div class="row">
@@ -73,10 +82,17 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" />
     <script src="~/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
 
+    <script src="~/assets/vendor/select2/select2.min.js"></script>
+    <script src="~/assets/vendor/datepicker/moment.min.js"></script>
+    <script src="~/assets/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/assets/js/global.js"></script>
+
 
 
     <script>
-        $(function() {
+        $(function () {
             $(".dataTable").DataTable({
                 dom: 'Bfrtip',
                 buttons: [
