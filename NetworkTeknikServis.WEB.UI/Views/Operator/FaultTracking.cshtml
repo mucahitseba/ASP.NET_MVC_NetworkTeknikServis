@@ -105,7 +105,7 @@
 
                     <div class="input-group col-md-12">
                         <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="gender">
+                            <select id="teknisyen" name="gender">
                                 <option disabled="disabled" selected="selected">Teknisyen Seç..</option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -172,6 +172,16 @@
                             $("#Csurname").val(data.customer.Surname);
                             $("#adress").val(data.fault.Adress);
                             $("#desc").val(data.fault.FaultDescription);
+                            $("#teknisyen").empty();
+                            $("#teknisyen").append($("<option></option>")
+                                           .attr("value", 0)
+                                           .text("Teknisyen Seç"));
+                            $.each(data.users, function (key, value) {
+                                $('#teknisyen')
+                                    .append($("<option></option>")
+                                        .attr("value", value.Id)
+                                        .text(value.Name + " " + value.Surname));
+                            });
                             alert(data.customer.Name);
                             $("#tablediv").hide();
                             $("#detaildiv").show(600);

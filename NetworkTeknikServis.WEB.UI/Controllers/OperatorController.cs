@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -7,6 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
+using NetworkTeknikServis.DAL;
+using NetworkTeknikServis.MODELS.Enums;
+using NetworkTeknikServis.MODELS.IdentityModels;
 using NetworkTeknikServis.MODELS.Models;
 using NetworkTeknikServis.MODELS.ViewModels;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
@@ -84,15 +88,37 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetDetail(Guid id)
         {
+            List<User> users = new List<User>();
+            int sayac = 0;
             try
             {
                 var fault = new FaultRepo().GetById(id);
+                var faults = new FaultRepo().GetAll();
                 var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+                var allTechnicians = NewRoleManager().FindByName(IdentityRoles.Technician.ToString()).Users.ToList();
                 var user = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
+
+                foreach (var item in allTechnicians)
+                {
+                    foreach (var item2 in faults)
+                    {
+                        if (item.UserId != item2.TechnicianId)
+                            sayac++;
+                    }
+
+                    if (sayac == faults.Count)
+                    {
+                        var x = await NewUserStore().FindByIdAsync(item.UserId);
+                        users.Add(x);
+                    }
+                    sayac = 0;
+                }
+
+                
 
                 return Json(new ResponseData()
                 {
-                    data = new { fault, user, customer },
+                    data = new { fault, user, customer,users },
                     success = true,
                 }, JsonRequestBehavior.AllowGet);
             }

@@ -462,6 +462,10 @@
       <Project>{b5356439-2128-4000-b753-8d914491ed86}</Project>
       <Name>NetworkTeknikServis.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NetworkTeknikServis.DAL\NetworkTeknikServis.DAL.csproj">
+      <Project>{C971FF22-E4CF-42F5-A243-2B179A9F7604}</Project>
+      <Name>NetworkTeknikServis.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetworkTeknikServis.MODELS\NetworkTeknikServis.MODELS.csproj">
       <Project>{afbb1eb8-56c7-4771-93e6-f3d041349b98}</Project>
       <Name>NetworkTeknikServis.MODELS</Name>
