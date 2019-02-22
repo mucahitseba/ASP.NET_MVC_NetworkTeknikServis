@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
 using NetworkTeknikServis.DAL;
+using NetworkTeknikServis.MODELS.Entities;
 using NetworkTeknikServis.MODELS.Enums;
 using NetworkTeknikServis.MODELS.IdentityModels;
 using NetworkTeknikServis.MODELS.Models;
@@ -130,6 +131,33 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     message = $"Bir hata olustu {ex.Message}"
                 }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AssignToTechnician(FaultTrackingViewModel model)
+        {
+            try
+            {
+                var teknisyen = await NewUserStore().FindByIdAsync(model.TechnicianID);
+                var fault = new FaultRepo().GetById(model.FaultID);
+                if (teknisyen != null)
+                {
+                    fault.haveJob = true;
+                    fault.TechnicianId = teknisyen.Id;
+                    new FaultRepo().Update(fault);
+                    TempData["message"] = $"{fault.FaultID} no'lu arıza işlemi {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyene atanmıştır.";
+                }
+                else
+                    throw new Exception("Teknisyen atama işlemi yapılırken bir hata oluştu");
+
+
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+            }
+
+            return View();
         }
 
 
