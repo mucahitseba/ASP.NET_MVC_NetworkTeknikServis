@@ -13,7 +13,7 @@ using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 namespace NetworkTeknikServis.WEB.UI.Controllers
 {
     
-    [Authorize]
+    [Authorize(Roles ="Technician,Admin")]
     public class TechnicianController : Controller
     {
         // GET: Technician
