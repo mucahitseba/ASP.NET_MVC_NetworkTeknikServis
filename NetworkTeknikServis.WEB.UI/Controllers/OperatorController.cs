@@ -142,7 +142,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 var fault = new FaultRepo().GetById(model.FaultID);
                 if (teknisyen != null)
                 {
-                    fault.haveJob = true;
+                    
                     fault.TechnicianId = teknisyen.Id;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza işlemi {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyene atanmıştır.";

@@ -436,6 +436,7 @@
     <Content Include="Views\Technician\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Operator\FaultTracking.cshtml" />
+    <Content Include="Views\Technician\FaultTracking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
