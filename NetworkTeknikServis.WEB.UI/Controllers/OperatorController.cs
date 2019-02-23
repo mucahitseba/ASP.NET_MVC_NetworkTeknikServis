@@ -18,7 +18,7 @@ using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 
 namespace NetworkTeknikServis.WEB.UI.Controllers
 {
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Operator,Admin")]
     public class OperatorController : Controller
     {
         // GET: Operator
@@ -82,8 +82,13 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         [HttpGet]
         public ActionResult FaultTracking(string id)
         {
-            var data = new FaultRepo().GetAll(x => x.OperatorId == id).ToList();
-            return View(data);
+            List<Fault> faults = new List<Fault>();
+            if (string.IsNullOrEmpty(id))
+                faults = new FaultRepo().GetAll().ToList();
+            else
+                faults = new FaultRepo().GetAll(x => x.OperatorId == id).ToList();
+
+            return View(faults);
         }
 
         [HttpGet]

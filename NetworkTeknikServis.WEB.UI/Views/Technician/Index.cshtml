@@ -1,49 +1,47 @@
 ﻿@using NetworkTeknikServis.BLL.Identity
 @model List<NetworkTeknikServis.MODELS.Entities.Fault>
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
-<br/>
-<br/>
-<br/>
-<br/>
-
 @section top
 {
 
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="~/assets/js/plugins/datatables/jquery.dataTables.min.css" />
+    <link href="~/assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/css/main.css" rel="stylesheet" media="all">
+
 }
 
-    <div class="container">
-        <div class="row">
-            <div class="card">
-                <div class="card-header">
-
-                </div>
-                <div class="card-block">
-                    <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                    <table class="table table-bordered table-striped table-vcenter dataTable">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Arıza No</th>
-                                <th>Kayıt Oluşturan Ad</th>
-                                <th>Kayıt Oluşturan Soyad</th>
-                                <th>Eklendigi Tarih</th>
-                                <th>Adres</th>
-                                <th>Arıza Açıklaması</th>
-                                <th class="text-center" style="width: 10%;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.Count; i++)
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <h2>Teknisyen Sayfası</h2>
+            </div>
+            <br />
+            <div class="card-block">
+                <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter dataTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Arıza No</th>
+                            <th>Kayıt Oluşturan Ad</th>
+                            <th>Kayıt Oluşturan Soyad</th>
+                            <th>Eklendigi Tarih</th>
+                            <th>Adres</th>
+                            <th>Arıza Açıklaması</th>
+                            <th class="text-center" style="width: 10%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
                         {
 
                             var data = MembershipTools.GetMusteri(Model[i].CustomerId);
                             var data2 = Model[i];
                             @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                            <tr class="@(data2.haveJob? "":"bg-red")">
+                            <tr class="@(data2.haveJob ? "" : "bg-red")">
                                 <td class="text-center">@data2.FaultID</td>
                                 <td>@data.Name</td>
                                 <td>@data.Surname</td>
@@ -60,14 +58,14 @@
                                     </div>
                                 </td>
                             </tr>
-                    }
-                        </tbody>
-                    </table>
-                </div>
-                <!-- .card-block -->
+                        }
+                    </tbody>
+                </table>
             </div>
+            <!-- .card-block -->
         </div>
     </div>
+</div>
 
 @section bottom
 {

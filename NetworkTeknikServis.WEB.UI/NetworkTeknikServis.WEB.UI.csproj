@@ -126,12 +126,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\animate.css" />
     <Content Include="assets\css\app-custom.css" />
     <Content Include="assets\css\app.css" />
     <Content Include="assets\css\bootstrap.css" />
+    <Content Include="assets\css\colors\default.css" />
     <Content Include="assets\css\font-awesome.css" />
+    <Content Include="assets\css\icons\linea-icons\linea.css" />
+    <Content Include="assets\css\icons\material-design-iconic-font\css\material-design-iconic-font.css" />
+    <Content Include="assets\css\icons\material-design-iconic-font\css\material-design-iconic-font.min.css" />
+    <Content Include="assets\css\icons\material-design-iconic-font\css\materialdesignicons.min.css" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.svg" />
     <Content Include="assets\css\ionicons.css" />
     <Content Include="assets\css\main.css" />
+    <Content Include="assets\css\spinners.css" />
+    <Content Include="assets\css\style.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\fonts\ionicons.svg" />
     <Content Include="assets\img\avatars\avatar1.jpg" />
@@ -171,7 +181,12 @@
     <Content Include="assets\js\core\jquery.placeholder.min.js" />
     <Content Include="assets\js\core\jquery.scrollLock.min.js" />
     <Content Include="assets\js\core\jquery.slimscroll.min.js" />
+    <Content Include="assets\js\custom.js" />
+    <Content Include="assets\js\custom.min.js" />
+    <Content Include="assets\js\dashboard1.js" />
     <Content Include="assets\js\global.js" />
+    <Content Include="assets\js\jquery.slimscroll.js" />
+    <Content Include="assets\js\morris-data.js" />
     <Content Include="assets\js\pages\base_forms_validation.js" />
     <Content Include="assets\js\pages\base_forms_wizard.js" />
     <Content Include="assets\js\pages\base_js_charts_chartjs.js" />
@@ -230,6 +245,8 @@
     <Content Include="assets\js\plugins\slick\slick.min.css" />
     <Content Include="assets\js\plugins\slick\slick.min.js" />
     <Content Include="assets\js\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="assets\js\toastr.js" />
+    <Content Include="assets\js\waves.js" />
     <Content Include="assets\vendor\datepicker\daterangepicker.css" />
     <Content Include="assets\vendor\datepicker\daterangepicker.js" />
     <Content Include="assets\vendor\datepicker\moment.min.js" />
@@ -340,6 +357,14 @@
     <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
     <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
     <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.eot" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="assets\css\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.woff2" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

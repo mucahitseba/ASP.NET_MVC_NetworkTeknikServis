@@ -3,27 +3,20 @@
 <section id="header">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                    <img src="~/images/edura-logo.png" alt="Edura - Multipurpose Website Template">
-                </a>
-            </div>
+        <div class="navbar-header col-md-12">
+            <a class="navbar-brand" href="#">
+                <img src="~/images/edura-logo.png" alt="Edura - Multipurpose Website Template">
+            </a>
+
             @if (HttpContext.Current.User.IsInRole("Admin"))
             {
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Home</a>
+                            <a href="@Url.Action("Index", "Admin")" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Home</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arıza Takip</a>
+                            <a href="@Url.Action("FaultTracking","Operator")" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Arıza Takip</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
@@ -37,10 +30,10 @@
             }
             else if (HttpContext.Current.User.IsInRole("Customer"))
             {
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
+                            <a href="@Url.Action("Index", "Customer")" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ürünler</a>
@@ -51,7 +44,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@MembershipTools.GetNameSurname(null)</a>
                             <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("UserProfile", "Account")"><i class="fa fa-shopping-cart fa-fw"></i> Profil </a></li>
+                                <li><a href="@Url.Action("UserProfile", "Account")"><i class="fa fa-user-circle"></i> Profil </a></li>
                                 <li><a href=@Url.Action("GetMyRecords", "Customer")><i class="fa fa-sign-out"></i>Arıza Kayıtlarım</a></li>
                                 <li><a href=@Url.Action("Logout", "Account")><i class="fa fa-sign-out"></i> Logout </a></li>
                             </ul>
@@ -61,7 +54,7 @@
             }
             else if (HttpContext.Current.User.IsInRole("Operator"))
             {
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="@Url.Action("Index","Operator")" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
@@ -81,7 +74,7 @@
             }
             else if (HttpContext.Current.User.IsInRole("Technician"))
             {
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="@Url.Action("Index","Technician")" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Anasayfa</a>
@@ -101,7 +94,7 @@
             }
             else
             {
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse ">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Func</a>
@@ -123,8 +116,6 @@
                     </ul>
                 </div>
             }
-            <!--/.nav-collapse -->
         </div>
     </nav>
 </section>
-
