@@ -1,10 +1,13 @@
 ﻿@using NetworkTeknikServis.BLL.Identity
+@using NetworkTeknikServis.MODELS.Enums
 @model List<NetworkTeknikServis.MODELS.Entities.Fault>
 @{
-    ViewBag.Title = "FaultTracking";
+    ViewBag.Title = "Fault Tracking";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
-
+<br />
+<br />
+<br />
 
 @section top
 {
@@ -60,7 +63,7 @@
                                 <td class="text-center">
                                     <div class="btn-group">
                                         @*<a href="@Url.Action("ConfirmFault", "Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Atama Yap" id="getdetail">*@
-                                        <button type="button" class="btn btn-xs btn-action btnatamayap" style="background-color:cadetblue" title="Atama Yap" name="@data2.FaultID">
+                                        <button type="button" class="btn btn-xs btn-action btnislemyap" style="background-color:cadetblue" title="İşlem Yap" name="@data2.FaultID">
                                             <i class="glyphicon glyphicon-transfer"></i>
                                         </button>
                                     </div>
@@ -74,4 +77,124 @@
         </div>
     </div>
 </div>
+
+<div class="page-wrapper bg-gray p-t-100 p-b-100 font-robo" id="detaildiv">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-1">
+            <div class="card-body">
+                <br />
+                <h2 class="title">Arıza Detay Sayfası</h2>
+                <form id="frmIslemYap">
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Fault ID" id="faultID">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Customer Name" id="Cname">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Customer Surname" id="Csurname">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Adress" id="adress">
+                    </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Fault Description" id="desc">
+                    </div>
+
+                    <div class="input-group col-md-12">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select id="Islemler" name="gender">
+                                <option disabled="disabled" selected="selected">İşlem Seç..</option>
+                                <option>@FaultState.Completed</option>
+                                <option>@FaultState.Uncompleted</option>
+                                <option>@FaultState.Pending</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-t-20 col-md-offset-9">
+                        <button class="btn btn--radius btn--blue" type="submit">İşlemi Bitir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section bottom
+{
+
+    <script src="~/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <script src="~/assets/vendor/select2/select2.min.js"></script>
+    <script src="~/assets/vendor/datepicker/moment.min.js"></script>
+    <script src="~/assets/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/assets/js/global.js"></script>
+
+    <script src="~/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#detaildiv").hide();
+
+            $(".dataTable").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            var arr = [];
+            @foreach (var item in Model)
+                        {
+                            @:arr.push({ FaultID:'@item.FaultID', FaultDescription :'@item.FaultDescription',Adress:'@item.Adress'})
+                        }
+            console.log(arr);
+
+            $(".btnislemyap").click(function (ev) {
+                    $("#detaildiv").toggle();
+                    $("#tablediv").toggle();
+                    var id = $(this).attr("name");
+                    $.ajax({
+                        url: '@Url.Action("GetDetail", "Technician")' + "?id=" + id,
+                        method: "get",
+                        dataType: "json",
+                    }).done(function (e) {
+                        if (e.data != null) {
+                            var data = e.data;
+                            $("#faultID").val(data.fault.FaultID);
+                            $("#Cname").val(data.customer.Name);
+                            $("#Csurname").val(data.customer.Surname);
+                            $("#adress").val(data.fault.Adress);
+                            $("#desc").val(data.fault.FaultDescription);
+                            
+                            
+                            $("#tablediv").hide();
+                            $("#detaildiv").show(600);
+                        }
+                    });
+            });
+
+            $("#frmIslemYap").submit(function (ev)
+            {
+
+                var faultID = $("#faultID").val()
+                var faultstate = $("#Islemler").val();
+                var data = { FaultID : faultID, faultState:faultstate };
+                console.log(data);
+                $.ajax({
+                    url: "@Url.Action("FaultFinish", "Technician")",
+                    method: "post",
+                    data: data
+                });
+            })
+
+        });
+    </script>
+
+}
 
