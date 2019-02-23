@@ -185,12 +185,12 @@
             $("#frmIslemYap").submit(function (ev)
             {
 
-                var teknisyenID = $("#teknisyen").val()
-                var faultID = $("#faultID").val();
-                var data = { FaultID : faultID, TechnicianID : teknisyenID };
+                var faultID = $("#faultID").val()
+                var faultstate = $("#Islemler").val();
+                var data = { FaultID : faultID, faultState:faultstate };
                 console.log(data);
                 $.ajax({
-                    url: "@Url.Action("AssignToTechnician", "Technician")",
+                    url: "@Url.Action("FaultFinish", "Technician")",
                     method: "post",
                     data: data
                 });

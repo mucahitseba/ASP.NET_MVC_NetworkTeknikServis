@@ -97,5 +97,37 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> FaultFinish(FaultFinishViewModel model)
+        {
+            try
+            {
+                var teknisyen = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
+                var fault = new FaultRepo().GetById(model.FaultID);
+                if (teknisyen!=null&&model.faultState==FaultState.Completed)
+                {
+                    fault.FaultState = model.faultState;
+                    fault.haveJob = false;
+                    new FaultRepo().Update(fault);
+                    TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
+                }
+                else if (teknisyen != null&&model.faultState == FaultState.Pending)
+                {
+                    fault.FaultState = model.faultState;
+                    new FaultRepo().Update(fault);
+                    TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.";
+                }
+                else
+                    throw new Exception("Teknisyen atama işlemi yapılırken bir hata oluştu");
+
+
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex.Message;
+            }
+
+            return View();
+        }
     }
 }
