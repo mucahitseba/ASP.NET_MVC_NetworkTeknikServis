@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
+using NetworkTeknikServis.MODELS.Enums;
+using NetworkTeknikServis.MODELS.IdentityModels;
+using NetworkTeknikServis.MODELS.Models;
 using NetworkTeknikServis.MODELS.ViewModels;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 
@@ -65,6 +68,33 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     ErrorCode = 500
                 };
                 return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetDetail(Guid id)
+        {
+            try
+            {
+                var fault = new FaultRepo().GetById(id);
+                
+                var faults = new FaultRepo().GetAll();
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+                var allTechnicians = NewRoleManager().FindByName(IdentityRoles.Technician.ToString()).Users.ToList();
+                var user = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
+
+                return Json(new ResponseData()
+                {
+                    data = new { fault, user, customer },
+                    success = true,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResponseData()
+                {
+                    success = false,
+                    message = $"Bir hata olustu {ex.Message}"
+                }, JsonRequestBehavior.AllowGet);
             }
         }
     }
