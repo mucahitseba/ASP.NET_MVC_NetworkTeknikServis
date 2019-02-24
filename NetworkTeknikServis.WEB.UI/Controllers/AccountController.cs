@@ -35,6 +35,14 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterLoginViewModel model)

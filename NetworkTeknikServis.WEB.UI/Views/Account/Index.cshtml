@@ -4,232 +4,135 @@
 }
 
 <!DOCTYPE html>
-<html class="app-ui" lang="tr">
+<html lang="en">
 <head>
-    <!-- Meta -->
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <!-- Document title -->
-    <title>Login - Register</title>
-    <meta name="description" content="AppUI - Frontend Template & UI Framework" />
-    <meta name="robots" content="noindex, nofollow" />
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="~/assets/img/favicons/apple-touch-icon.png" />
-    <link rel="icon" href="~/assets/img/favicons/favicon.ico" />
-    <!-- Google fonts -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,900%7CRoboto+Slab:300,400%7CRoboto+Mono:400" />
-    <!-- AppUI CSS stylesheets -->
-    <link rel="stylesheet" id="css-font-awesome" href="~/assets/css/font-awesome.css" />
-    <link rel="stylesheet" id="css-ionicons" href="~/assets/css/ionicons.css" />
-    <link rel="stylesheet" id="css-bootstrap" href="~/assets/css/bootstrap.css" />
-    <link rel="stylesheet" id="css-app" href="~/assets/css/app.css" />
-    <link rel="stylesheet" id="css-app-custom" href="~/assets/css/app-custom.css" />
+    <title>Network Teknik Servis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/assets/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/main.css">
+    <!--===============================================================================================-->
 
-    <!-- End Stylesheets -->
+    <style>
+        a:hover{
+            text-decoration: underline
+        }
+    </style>
 </head>
-<body class="app-ui">
-    <div class="app-layout-canvas">
-        <div class="app-layout-container">
-            <!-- Header -->
-            <!-- End header -->
-            <main class="app-layout-content">
-                <!-- Page header -->
-                <div class="page-header bg-green bg-inverse">
-                    <div class="container">
-                        <!-- Section Content -->
-                        <div class="p-y-lg text-center">
-                            <h1 class="display-2">My Account Login</h1>
-                            <p class="text-muted">Unlimited ideas. Unlimited power. Unlimited joy. Unlimited opportunities.</p>
-                            <p class="text-muted">@Html.ValidationSummary()</p>
-                            <h3>@TempData["Message"]</h3>
-                        </div>
-                        <!-- End Section Content -->
-                    </div>
-                </div>
-                <!-- End Page header -->
-                <!-- Page content -->
-                <div class="page-content">
-                    <div class="container">
-                        <div class="row">
-                            <!-- Login card -->
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <h3 class="card-header h4">Login</h3>
-                                    <div class="card-block">
-                                        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-    {
-                                    @Html.AntiForgeryToken()
-                                    <div class="form-group">
-                                        @Html.LabelFor(x => x.LoginViewModel.UserName, new { @class = "sr-only" })
-                                        @Html.TextBoxFor(x => x.LoginViewModel.UserName, new { @class = "form-control", placeholder = "Kullanıcı Adı" })
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(x => x.LoginViewModel.Password, new { @class = "sr-only" })
-                                        @Html.TextBoxFor(x => x.LoginViewModel.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="RememberMe" class="css-input switch switch-sm switch-app">
-                                            @Html.CheckBoxFor(x => x.LoginViewModel.RememberMe)<span></span> Remember me
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-app btn-block">Giriş Yap</button>
-                                    <br/>
-                                    <a href="@Url.Action("RecoverPassword", "Account")" class="btn btn-app btn">
-                                        Şifremi Unuttum
-                                    </a>
-}
-                                    </div>
-                                    <!-- .card-block -->
-                                </div>
-                                <!-- .card -->
-                            </div>
-                            <!-- .col-md-6 -->
-                            <!-- End login -->
-                            <!-- Sign up -->
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <h3 class="card-header h4">Sign up</h3>
-                                    <div class="card-block">
+<body style="background-color: #666666;">
 
-                                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <div class="form-group">
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.Name, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.Name, new { @class = "form-control", placeholder = "Ad" })
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.Surname, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.Surname, new { @class = "form-control", placeholder = "Soyad" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.UserName, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.UserName, new { @class = "form-control", placeholder = "Kullanıcı Adı" })
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.Email, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.Email, new { @class = "form-control", placeholder = "E Mail", type = "email" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.Password, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    @Html.LabelFor(x => x.RegisterViewModel.ConfirmPassword, new { @class = "sr-only" })
-                                                    @Html.TextBoxFor(x => x.RegisterViewModel.ConfirmPassword, new { @class = "form-control", placeholder = "Şifre Tekrar", type = "password" })
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-app btn-block">Kayıt Ol</button>
-                                        }
-                                    </div>
-                                    <!-- .card-block -->
-                                </div>
-                                <!-- .card -->
-                            </div>
-                            <!-- .col-md-6 -->
-                            <!-- End sign up -->
-                        </div>
-                        <!-- .row -->
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form", id = "frmLogin" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <span class="login100-form-title p-b-43">
+                        Login to continue
+                    </span>
+
+
+                    <div class="wrap-input100 validate-input">
+                        @Html.TextBoxFor(x => x.LoginViewModel.UserName, new { @class = "input100", type = "text", name = "uName", id = "username" })
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Email</span>
                     </div>
-                    <!-- .container -->
-                </div>
-                <!-- End page content -->
-                <!-- Modal -->
-                <div class="modal" id="modal-signup-terms" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="card-header bg-blue bg-inverse">
-                                <h4>Terms &amp; Conditions</h4>
-                                <ul class="card-actions">
-                                    <li>
-                                        <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-block">
-                                <p>
-                                    Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant
-                                    quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.
-                                </p>
-                                <p>
-                                    Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant
-                                    quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
-                                <button class="btn btn-sm btn-app" type="button" data-dismiss="modal"><i class="ion-checkmark"></i> Ok</button>
-                            </div>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        @Html.TextBoxFor(x => x.LoginViewModel.Password, new { @class = "input100", type = "password", name = "pass", id = "pass" })
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Password</span>
+                    </div>
+
+                    <div class="flex-sb-m w-full p-t-3 p-b-32">
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                            @Html.CheckBoxFor(x => x.LoginViewModel.RememberMe, new { @class = "input-checkbox100", id = "ckb1", type = "checkbox", name = "remember-me" })
+                            <label class="label-checkbox100" for="ckb1">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div>
+                            <a href="@Url.Action("RecoverPassword", "Account")" class="txt1">
+                                Forgot Password?
+                            </a>
                         </div>
                     </div>
-                </div>
-                <!-- End modal -->
-            </main>
-            <footer class="app-layout-footer">
-                <div class="container p-y-md">
-                    <div class="pull-right hidden-sm hidden-xs">
-                        <a href="https://shapebootstrap.net/item/1525731-appui-admin-frontend-template/?ref=rustheme" target="_blank" rel="nofollow">Purchase a license</a>
+
+
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">
+                            Login
+                        </button>
                     </div>
-                    <div class="pull-left text-center text-md-left">
-                        AppUI &copy; <span class="js-year-copy"></span>
+
+                    <div class="text-center p-t-46 p-b-20">
+                        <a href="#" class="hover jajax"><span class="txt2">or sign up using</span></a>
                     </div>
-                </div>
-            </footer>
-        </div>
-        <!-- .app-layout-container -->
-    </div>
-    <!-- .app-layout-canvas -->
-    <!-- Apps Modal -->
-    <!-- Opens from the button in the header -->
-    <div id="apps-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-sm modal-dialog modal-dialog-top">
-            <div class="modal-content">
-                <!-- Apps card -->
-                <div class="card m-b-0">
-                    <div class="card-header bg-app bg-inverse">
-                        <h4>Apps</h4>
-                        <ul class="card-actions">
-                            <li>
-                                <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
-                            </li>
-                        </ul>
+
+                    <div class="login100-form-social flex-c-m">
+                        <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+                            <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+
+                        <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
                     </div>
-                    <div class="card-block">
-                        <div class="row text-center">
-                            <div class="col-xs-6">
-                                <a class="card card-block m-b-0 bg-app-secondary bg-inverse" href="index.html">
-                                    <i class="ion-speedometer fa-4x"></i>
-                                    <p>Admin</p>
-                                </a>
-                            </div>
-                            <div class="col-xs-6">
-                                <a class="card card-block m-b-0 bg-app-tertiary bg-inverse" href="frontend_home.html">
-                                    <i class="ion-laptop fa-4x"></i>
-                                    <p>Frontend</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .card-block -->
-                </div>
-                <!-- End Apps card -->
+                }
+                <img src="~/assets/img/bg-01.jpg" class="login100-more" />
             </div>
         </div>
     </div>
-    <!-- End Apps Modal -->
-    <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
-    <script src="~/assets/js/core/jquery.min.js"></script>
-    <script src="~/assets/js/core/bootstrap.min.js"></script>
-    <script src="~/assets/js/core/jquery.slimscroll.min.js"></script>
-    <script src="~/assets/js/core/jquery.scrollLock.min.js"></script>
-    <script src="~/assets/js/core/jquery.placeholder.min.js"></script>
-    <script src="~/assets/js/app.js"></script>
-    <script src="~/assets/js/app-custom.js"></script>
+
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/assets/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assets/js/main.js"></script>
+
+<script>
+    $(function () {
+        $("a.jajax").click(function() {
+            $.ajax({
+                url: "@Url.Action("Register", "Account")",
+                method: "get"
+            });
+        });
+    });
+</script>
+
 </body>
-</html> 
+</html>
