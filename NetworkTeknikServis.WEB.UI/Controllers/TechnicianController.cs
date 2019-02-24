@@ -107,6 +107,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 if (teknisyen!=null&&model.faultState==FaultState.Completed)
                 {
                     fault.FaultState = model.faultState;
+                    fault.TechnicianDescription = model.TechnicianDescription;
                     fault.haveJob = false;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";

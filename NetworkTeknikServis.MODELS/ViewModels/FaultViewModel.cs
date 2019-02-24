@@ -43,6 +43,7 @@ namespace NetworkTeknikServis.MODELS.ViewModels
         public string FaultDescription { get; set; }
         public string Adress { get; set; }
         public bool haveJob { get; set; } = false;
+        public string TechnicianDescription { get; set; }
 
     }
 }
