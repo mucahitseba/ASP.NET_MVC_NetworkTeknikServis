@@ -12,5 +12,6 @@ namespace NetworkTeknikServis.MODELS.ViewModels
         public Guid FaultID { get; set; } = Guid.NewGuid();
         
         public FaultState faultState { get; set; }
+        public string TechnicianDescription { get; set; }
     }
 }

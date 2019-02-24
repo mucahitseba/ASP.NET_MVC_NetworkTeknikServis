@@ -108,7 +108,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 {
                     foreach (var item2 in faults)
                     {
-                        if (item.UserId != item2.TechnicianId&&item2.haveJob==false)
+                        if (item2.haveJob == false)
                             sayac++;
                     }
 

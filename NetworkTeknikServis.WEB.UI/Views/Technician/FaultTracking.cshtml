@@ -100,6 +100,9 @@
                     <div class="input-group col-md-12">
                         <input class="input-style-1" type="text" placeholder="Fault Description" id="desc">
                     </div>
+                    <div class="input-group col-md-12">
+                        <input class="input-style-1" type="text" placeholder="Technician Description" id="techdesc">
+                    </div>
 
                     <div class="input-group col-md-12">
                         <div class="rs-select2 js-select-simple select--no-search">
@@ -183,8 +186,9 @@
             {
 
                 var faultID = $("#faultID").val()
-                var faultstate = $("#Islemler").val();
-                var data = { FaultID : faultID, faultState:faultstate };
+                var faultstate = $("#Islemler").val()
+                var techdesc = $("techdesc").val;
+                var data = { FaultID : faultID, faultState:faultstate,TechnicianDescription:techdesc };
                 console.log(data);
                 $.ajax({
                     url: "@Url.Action("FaultFinish", "Technician")",
