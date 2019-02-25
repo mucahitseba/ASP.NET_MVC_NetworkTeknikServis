@@ -108,17 +108,19 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
+
         [HttpPost]
         public async Task<ActionResult> FaultFinish(FaultFinishViewModel model)
         {
             try
             {
-                var teknisyen = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
+                var teknisyen = await NewUserStore()
+                    .FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
                 var fault = new FaultRepo().GetById(model.FaultID);
                 var operatorr = await NewUserStore().FindByIdAsync(fault.OperatorId);
                 var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
 
-                if (teknisyen!=null&&model.faultState==FaultState.Completed)
+                if (teknisyen != null && model.faultState == FaultState.Completed)
                 {
                     fault.FaultState = model.faultState;
                     fault.TechnicianDescription = model.TechnicianDescription;
@@ -136,28 +138,36 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
 
                     };
                     new FaultLogRepo().Insert(Log);
-                    TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
+                    TempData["message"] =
+                        $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
                                      (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 
                     var emailService = new EmailService();
-                    var body = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
-                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "İş Durumu" }, operatorr.Email);
-                    var bodyy = $"{fault.FaultID} no'lu arızanız {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.<br>Bizi tercih ettiğiniz için teşekkür ederiz";
-                    await emailService.SendAsync(new IdentityMessage() { Body = bodyy, Subject = "İş Durumu" }, customer.Email);
+                    var body =
+                        $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
+                    await emailService.SendAsync(new IdentityMessage() {Body = body, Subject = "İş Durumu"},
+                        operatorr.Email);
+                    var bodyy =
+                        $"{fault.FaultID} no'lu arızanız {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.<br>Bizi tercih ettiğiniz için teşekkür ederiz";
+                    await emailService.SendAsync(new IdentityMessage() {Body = bodyy, Subject = "İş Durumu"},
+                        customer.Email);
 
 
                 }
-                else if (teknisyen != null&&model.faultState == FaultState.Pending)
+                else if (teknisyen != null && model.faultState == FaultState.Pending)
                 {
                     fault.FaultState = model.faultState;
                     new FaultRepo().Update(fault);
-                    TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.";
+                    TempData["message"] =
+                        $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.";
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
                                      (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
                     var emailService = new EmailService();
-                    var body = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.<br>Açıklama:{model.TechnicianDescription} ";
-                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "İş Durumu" }, operatorr.Email);
+                    var body =
+                        $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.<br>Açıklama:{model.TechnicianDescription} ";
+                    await emailService.SendAsync(new IdentityMessage() {Body = body, Subject = "İş Durumu"},
+                        operatorr.Email);
                 }
                 else
                     throw new Exception("İşlemi bitirirken hata oluştu");
@@ -169,7 +179,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 TempData["message"] = ex.Message;
             }
 
-            return RedirectToAction("Index","Technician",model);
+            return RedirectToAction("Index", "Technician", model);
         }
     }
 }

@@ -67,10 +67,18 @@
                                 <td class="text-center">
                                     <div class="btn-group">
                                         @*<a href="@Url.Action("ConfirmFault", "Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Atama Yap" id="getdetail">*@
-                                        <button type="button" class="btn btn-xs btn-action btnatamayap" style="background-color:cadetblue" title="Atama Yap" name="@data2.FaultID">
-                                            <i class="glyphicon glyphicon-transfer"></i>
-                                        </button>
-                                    </div>
+                                        @if (data2.FaultState == FaultState.Completed)
+                                        {
+                                            <a href="@Url.Action("SendSurvey","Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" style="background-color:cadetblue" title="Anket Gönder" id="sendSurvay"><i class="glyphicon glyphicon-send"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-xs btn-action btnatamayap" style="background-color:cadetblue" title="Atama Yap" name="@data2.FaultID">
+                                                <i class="glyphicon glyphicon-transfer"></i>
+                                            </button>
+                                        }
+                                                
+                                        </div>
                                 </td>
                             </tr>
                         }

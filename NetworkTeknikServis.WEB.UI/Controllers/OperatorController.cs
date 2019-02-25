@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using NetworkTeknikServis.BLL.Helpers;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
 using NetworkTeknikServis.DAL;
@@ -159,6 +160,40 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             }
 
             return View();
+        }
+
+        public async Task<ActionResult> SendSurvey(Guid id)
+        {
+            try
+            {
+                var fault = new FaultRepo().GetById(id);
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+
+                fault.SurveyCode = StringHelper.GetCode();
+                new FaultRepo().Update(fault);
+
+                string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                                 (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                var emailService = new EmailService();
+                var body = $"Merhaba <b>{customer.Name} {customer.Surname}</b><br>Sunmuş olduğumuz servis hizmeti için kısa bir memnuniyet anketi doldurmanızı talep ediyoruz.Verilen linke tıklayarak anketimizi doldurabilirsiniz.İlginize teşekkürler..<br> <a href='{SiteUrl}/survey/index?code={fault.SurveyCode}' >Anket Linki </a> ";
+                await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" }, customer.Email);
+
+                TempData["message"] = $"{customer.Name} {customer.Surname} isimli müşterimize memnuniyet anketi gönderilmiştir.";
+
+                return RedirectToAction("Index", "Operator");
+            }
+            catch (Exception ex)
+            {
+                TempData["Model"] = new ErrorViewModel()
+                {
+                    Text = $"Bir hata oluştu {ex.Message}",
+                    ActionName = "Index",
+                    ControllerName = "Operator",
+                    ErrorCode = 500
+                };
+                return RedirectToAction("Error", "Home");
+            }
         }
 
 

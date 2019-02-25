@@ -46,5 +46,23 @@ namespace NetworkTeknikServis.MODELS.Entities
 
 
 
+        [DisplayName("Teknisyenin Konu Hakkında Bilgisi Yeterli miydi ?")]
+        public SurveyState TeknisyenBilgiPuani { get; set; }
+        [DisplayName("Teknisyenin Size Karşı Davranışı nasıldı ?")]
+        public SurveyState TeknisyenDavranisPuani { get; set; }
+        [DisplayName("Çözüm Sürecinde OMNet Çalışanlarının iletişimi Nasıldı ?")]
+        public SurveyState DavranisPuani { get; set; }
+        [DisplayName("OMNet hizmetinden memnun Kaldınız mı ?")]
+        public SurveyState OMNetHizmetPuanı { get; set; }
+        [DisplayName("OMNet Hakkındaki Görüşleriniz.")]
+        public string OMNetHakkindakiGorusler { get; set; }
+
+        public string SurveyCode { get; set; }
+
+        //TODO anket yapıldımı için alan.
+        public bool AnketYapildimi { get; set; } = false;
+
+
+
     }
 }
