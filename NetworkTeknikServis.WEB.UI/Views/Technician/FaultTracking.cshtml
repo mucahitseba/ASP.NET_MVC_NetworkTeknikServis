@@ -51,7 +51,7 @@
                             var data = MembershipTools.GetMusteri(Model[i].CustomerId);
                             var data2 = Model[i];
                             @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                            <tr class="@(data2.haveJob? "":"bg-red")">
+                            <tr class="@(data2.FaultState != FaultState.Completed? "success":"danger")">
                                 <td class="text-center" id="faultid">@data2.FaultID</td>
                                 <td>@data.Name</td>
                                 <td>@data.Surname</td>
@@ -174,6 +174,7 @@
                             $("#Csurname").val(data.customer.Surname);
                             $("#adress").val(data.fault.Adress);
                             $("#desc").val(data.fault.FaultDescription);
+                            $("#techdesc").val(data.fault.TechnicianDescription);
 
 
                             $("#tablediv").hide();
@@ -182,13 +183,12 @@
                     });
             });
 
-            $("#frmIslemYap").submit(function (ev)
-            {
+            $("#frmIslemYap").submit(function (ev) {
 
                 var faultID = $("#faultID").val()
                 var faultstate = $("#Islemler").val()
-                var techdesc = $("techdesc").val;
-                var data = { FaultID : faultID, faultState:faultstate,TechnicianDescription:techdesc };
+                var techdescc = $("#techdesc").val();
+                var data = { FaultID : faultID, faultState:faultstate,TechnicianDescription:techdescc };
                 console.log(data);
                 $.ajax({
                     url: "@Url.Action("FaultFinish", "Technician")",

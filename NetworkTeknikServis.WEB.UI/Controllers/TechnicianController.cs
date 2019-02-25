@@ -23,10 +23,9 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         public async Task<ActionResult> Index()
         {
             var teknisyen= await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
-            var data = new FaultRepo().GetAll(x => x.TechnicianId == teknisyen.Id).ToList();
+            var data = new FaultRepo().GetAll(x => x.FaultState != FaultState.Completed && x.TechnicianId == teknisyen.Id ).ToList();
             return View(data);
         }
-
         public ActionResult FaultTracking(string id)
         {
             var data = new FaultRepo().GetAll(x => x.TechnicianId == id).ToList();
@@ -104,6 +103,8 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             {
                 var teknisyen = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
                 var fault = new FaultRepo().GetById(model.FaultID);
+                var operatorr = await NewUserStore().FindByIdAsync(fault.OperatorId);
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
                 if (teknisyen!=null&&model.faultState==FaultState.Completed)
                 {
                     fault.FaultState = model.faultState;
@@ -111,15 +112,30 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     fault.haveJob = false;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
+                    string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                                     (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                    var emailService = new EmailService();
+                    var body = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
+                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "İş Durumu" }, operatorr.Email);
+                    var bodyy = $"{fault.FaultID} no'lu arızanız {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.<br>Bizi tercih ettiğiniz için teşekkür ederiz";
+                    await emailService.SendAsync(new IdentityMessage() { Body = bodyy, Subject = "İş Durumu" }, customer.Email);
+
+
                 }
                 else if (teknisyen != null&&model.faultState == FaultState.Pending)
                 {
                     fault.FaultState = model.faultState;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.";
+                    string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                                     (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+                    var emailService = new EmailService();
+                    var body = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilememiştir.<br>Açıklama:{model.TechnicianDescription} ";
+                    await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "İş Durumu" }, operatorr.Email);
                 }
                 else
-                    throw new Exception("Teknisyen atama işlemi yapılırken bir hata oluştu");
+                    throw new Exception("İşlemi bitirirken hata oluştu");
 
 
             }
@@ -128,7 +144,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 TempData["message"] = ex.Message;
             }
 
-            return View();
+            return View(model);
         }
     }
 }

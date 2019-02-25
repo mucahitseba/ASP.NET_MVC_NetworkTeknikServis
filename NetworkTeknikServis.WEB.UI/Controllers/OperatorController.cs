@@ -108,16 +108,15 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 {
                     foreach (var item2 in faults)
                     {
-                        if (item2.haveJob == false)
-                            sayac++;
-                    }
-
-                    if (sayac == faults.Count)
-                    {
-                        var x = await NewUserStore().FindByIdAsync(item.UserId);
-                        users.Add(x);
-                    }
-                    sayac = 0;
+                        if (item2.TechnicianId!=item.UserId&&item2.haveJob == false)
+                        {
+                            var x = await NewUserStore().FindByIdAsync(item.UserId);
+                            users.Add(x);
+                            break;
+                        }
+                    
+                                                
+                    } 
                 }
 
                 

@@ -13,7 +13,7 @@ namespace NetworkTeknikServis.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201902240942595_a1"; }
+            get { return "201902250543099_a1"; }
         }
         
         string IMigrationMetadata.Source
