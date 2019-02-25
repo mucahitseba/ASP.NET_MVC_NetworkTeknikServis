@@ -60,13 +60,21 @@
                                 <td>@data2.Adress</td>
                                 <td>@data2.FaultDescription</td>
 
-
                                 <td class="text-center">
                                     <div class="btn-group">
                                         @*<a href="@Url.Action("ConfirmFault", "Operator", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Atama Yap" id="getdetail">*@
-                                        <button type="button" class="btn btn-xs btn-action btnislemyap" style="background-color:cadetblue" title="İşlem Yap" name="@data2.FaultID">
-                                            <i class="glyphicon glyphicon-transfer"></i>
-                                        </button>
+                                        @if (data2.FaultState != FaultState.Completed)
+                                        {
+                                            <button type="button" class="btn btn-xs btn-action btnislemyap" aria-readonly="readonly" style="background-color:cadetblue" title="İşlem Yap" name="@data2.FaultID">
+                                                <i class="glyphicon glyphicon-transfer"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <h5>Arıza Giderildi</h5>
+                                        }
+
+
                                     </div>
                                 </td>
                             </tr>
