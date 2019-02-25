@@ -1,4 +1,5 @@
-﻿@using NetworkTeknikServis.BLL.Identity
+﻿    @using NetworkTeknikServis.BLL.Identity
+@using NetworkTeknikServis.MODELS.Enums
 @model List<NetworkTeknikServis.MODELS.Entities.Fault>
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
@@ -18,6 +19,10 @@
         <div class="card">
             <div class="card-header">
                 <h2>Teknisyen Sayfası</h2>
+                <br/>
+                <br/>
+                <p class="text-muted">@Html.ValidationSummary()</p>
+                <h3>@TempData["message"]</h3>
             </div>
             <br />
             <div class="card-block">
@@ -31,6 +36,7 @@
                             <th>Eklendigi Tarih</th>
                             <th>Adres</th>
                             <th>Arıza Açıklaması</th>
+                            <th>Arıza Durumu</th>
                             <th class="text-center" style="width: 10%;">Actions</th>
                         </tr>
                     </thead>
@@ -41,14 +47,14 @@
                             var data = MembershipTools.GetMusteri(Model[i].CustomerId);
                             var data2 = Model[i];
                             @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                            <tr class="@(data2.haveJob ? "" : "bg-red")">
+                            <tr class="@(data2.FaultState == FaultState.Completed ? "success" : "danger")">
                                 <td class="text-center">@data2.FaultID</td>
                                 <td>@data.Name</td>
                                 <td>@data.Surname</td>
                                 <td>@data2.FaultNotifyDate</td>
                                 <td>@data2.Adress</td>
                                 <td>@data2.FaultDescription</td>
-
+                                <td>@data2.FaultState</td>
 
                                 <td class="text-center">
                                     <div class="btn-group">

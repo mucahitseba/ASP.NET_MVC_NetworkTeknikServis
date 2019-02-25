@@ -42,6 +42,7 @@ namespace NetworkTeknikServis.MODELS.Entities
         public string Adress { get; set; }
         public bool haveJob { get; set; } = false;
         public string TechnicianDescription { get; set; }
+        public TechnicianState TechnicianState { get; set; } = TechnicianState.Bosta;
 
 
 

@@ -45,24 +45,24 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterLoginViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", model);
+                return View("Register", model);
             }
             try
             {
                 var userStore = NewUserStore();
                 var userManager = NewUserManager();
 
-                var rm = model.RegisterViewModel;
+                var rm = model;
 
                 var user = await userManager.FindByNameAsync(rm.UserName);
                 if (user != null)
                 {
                     ModelState.AddModelError("UserName", "Bu kullanıcı adı daha önceden alınmıştır");
-                    return View("Index", model);
+                    return View("Register", model);
                 }
 
                 var newUser = new User()
@@ -100,10 +100,10 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                         err += resultError + " ";
                     }
                     ModelState.AddModelError("", err);
-                    return View("Index", model);
+                    return View("Register", model);
                 }
 
-                TempData["Message"] = "Kaydınız alınlıştır. Lütfen giriş yapınız";
+                TempData["Message"] = "Kaydınız alınmıştır. Lütfen giriş yapınız";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 TempData["Model"] = new ErrorViewModel()
                 {
                     Text = $"Bir hata oluştu {ex.Message}",
-                    ActionName = "Index",
+                    ActionName = "Register",
                     ControllerName = "Account",
                     ErrorCode = 500
                 };
@@ -121,6 +121,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(RegisterLoginViewModel model)
+
         {
             try
             {

@@ -106,17 +106,13 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
 
                 foreach (var item in allTechnicians)
                 {
-                    foreach (var item2 in faults)
+                    var calisiyorMu = new FaultRepo().GetAll().FirstOrDefault(x=>x.TechnicianId == item.UserId && x.TechnicianState == TechnicianState.Calısıyor);
+
+                    if (calisiyorMu == null)
                     {
-                        if (item2.TechnicianId!=item.UserId&&item2.haveJob == false)
-                        {
-                            var x = await NewUserStore().FindByIdAsync(item.UserId);
-                            users.Add(x);
-                            break;
-                        }
-                    
-                                                
-                    } 
+                        var User = NewUserManager().FindById(item.UserId);
+                        users.Add(User);
+                    }
                 }
 
                 
@@ -148,6 +144,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 {
                     
                     fault.TechnicianId = teknisyen.Id;
+                    fault.TechnicianState = TechnicianState.Calısıyor;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza işlemi {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyene atanmıştır.";
                 }

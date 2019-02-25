@@ -44,7 +44,7 @@
                             var data = MembershipTools.GetMusteri(Model[i].CustomerId);
                             var data2 = Model[i];
                             @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                            <tr class="@(data2.AssignedOperator? "":"bg-red")">
+                            <tr class="@(data2.AssignedOperator ? "bg-green":"bg-red")">
                                 <td class="text-center">@data2.FaultID</td>
                                 <td>@data.Name</td>
                                 <td>@data.Surname</td>

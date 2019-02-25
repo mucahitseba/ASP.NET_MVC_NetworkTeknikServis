@@ -24,12 +24,12 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         public async Task<ActionResult> Index()
         {
             var teknisyen= await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
-            var data = new FaultRepo().GetAll(x => x.FaultState != FaultState.Completed && x.TechnicianId == teknisyen.Id ).ToList();
+            var data = new FaultRepo().GetAll(x => x.TechnicianId == teknisyen.Id && x.FaultState == FaultState.Completed).ToList();
             return View(data);
         }
         public ActionResult FaultTracking(string id)
         {
-            var data = new FaultRepo().GetAll(x => x.TechnicianId == id).ToList();
+            var data = new FaultRepo().GetAll(x => x.TechnicianId == id && (x.FaultState == FaultState.Uncompleted || x.FaultState == FaultState.Pending)).ToList();
             return View(data);
         }
 
@@ -117,11 +117,13 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 var fault = new FaultRepo().GetById(model.FaultID);
                 var operatorr = await NewUserStore().FindByIdAsync(fault.OperatorId);
                 var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+
                 if (teknisyen!=null&&model.faultState==FaultState.Completed)
                 {
                     fault.FaultState = model.faultState;
                     fault.TechnicianDescription = model.TechnicianDescription;
                     fault.haveJob = false;
+                    fault.TechnicianState = TechnicianState.Bosta;
                     new FaultRepo().Update(fault);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
@@ -156,7 +158,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 TempData["message"] = ex.Message;
             }
 
-            return View(model);
+            return RedirectToAction("Index","Technician",model);
         }
     }
 }
