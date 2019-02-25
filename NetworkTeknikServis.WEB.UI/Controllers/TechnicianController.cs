@@ -123,6 +123,17 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     fault.TechnicianDescription = model.TechnicianDescription;
                     fault.haveJob = false;
                     new FaultRepo().Update(fault);
+                    var Log = new FaultLog
+                    {
+                        TechnicianId = fault.TechnicianId,
+                        CustomerId = fault.CustomerId,
+                        Operation = fault.FaultState.ToString(),
+                        FaultId = fault.FaultID,
+                        OperationDescription = fault.FaultDescription
+
+
+                    };
+                    new FaultLogRepo().Insert(Log);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyen tarafından giderilmiştir.";
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
                                      (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
