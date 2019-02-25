@@ -3,16 +3,16 @@ namespace NetworkTeknikServis.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class a1 : DbMigration
+    public partial class a3 : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Faults", "TechnicianDescription", c => c.String());
+            AlterColumn("dbo.FaultsLog", "FaultId", c => c.Guid(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Faults", "TechnicianDescription");
+            AlterColumn("dbo.FaultsLog", "FaultId", c => c.String());
         }
     }
 }

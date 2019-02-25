@@ -79,6 +79,7 @@
     <Compile Include="Abstracts\BaseEntity.cs" />
     <Compile Include="Abstracts\BaseEntity2.cs" />
     <Compile Include="Entities\Fault.cs" />
+    <Compile Include="Entities\FaultLog.cs" />
     <Compile Include="Enums\FaultState.cs" />
     <Compile Include="Enums\IdentityRoles.cs" />
     <Compile Include="Enums\MessageStates.cs" />

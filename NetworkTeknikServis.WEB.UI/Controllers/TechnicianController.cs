@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Repository;
 using NetworkTeknikServis.BLL.Services.Senders;
+using NetworkTeknikServis.MODELS.Entities;
 using NetworkTeknikServis.MODELS.Enums;
 using NetworkTeknikServis.MODELS.IdentityModels;
 using NetworkTeknikServis.MODELS.Models;
@@ -38,13 +39,24 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             {
                 var fault = new FaultRepo().GetById(id);
                 var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
-
+                
                 var technician = await NewUserStore().FindByIdAsync(HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId());
                 if (technician != null)
                 {
                     fault.haveJob = true;
                     
                     new FaultRepo().Update(fault);
+                    var Log = new FaultLog
+                    {
+                        TechnicianId = fault.TechnicianId,
+                        CustomerId = fault.CustomerId,
+                        Operation = fault.FaultState.ToString(),
+                        FaultId = fault.FaultID,
+                        OperationDescription = fault.FaultDescription
+                        
+
+                    };
+                    new FaultLogRepo().Insert(Log);
 
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
                                      (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);

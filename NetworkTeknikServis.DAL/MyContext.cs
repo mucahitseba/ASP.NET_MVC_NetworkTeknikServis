@@ -19,5 +19,6 @@ namespace NetworkTeknikServis.DAL
         }
 
         public virtual DbSet<Fault> Faults { get; set; }
+        public virtual DbSet<FaultLog> FaultLogs { get; set; }
     }
 }
