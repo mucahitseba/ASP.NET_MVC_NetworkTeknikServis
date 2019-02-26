@@ -55,6 +55,15 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     fault.AssignedOperator = true;
                     fault.OperatorId = user.Id;
                     new FaultRepo().Update(fault);
+                    var Log = new FaultLog
+                    {
+                        TechnicianId = fault.TechnicianId,
+                        CustomerId = fault.CustomerId,
+                        Operation = "Operatör arızayı onayladı",
+                        FaultId = fault.FaultID,
+                        OperationDescription = fault.FaultDescription
+                    };
+                    new FaultLogRepo().Insert(Log);
 
                     string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
                                      (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
@@ -147,6 +156,15 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     fault.TechnicianId = teknisyen.Id;
                     fault.TechnicianState = TechnicianState.Calısıyor;
                     new FaultRepo().Update(fault);
+                    var Log = new FaultLog
+                    {
+                        TechnicianId = fault.TechnicianId,
+                        CustomerId = fault.CustomerId,
+                        Operation = $"Arıza {teknisyen.Name} {teknisyen.Surname} isimli teknisyene atandı",
+                        FaultId = fault.FaultID,
+                        OperationDescription = fault.FaultDescription
+                    };
+                    new FaultLogRepo().Insert(Log);
                     TempData["message"] = $"{fault.FaultID} no'lu arıza işlemi {teknisyen.Name + " " + teknisyen.Surname} isimli teknisyene atanmıştır.";
                 }
                 else

@@ -50,11 +50,9 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     {
                         TechnicianId = fault.TechnicianId,
                         CustomerId = fault.CustomerId,
-                        Operation = fault.FaultState.ToString(),
+                        Operation = $"Arıza {technician.Name} {technician.Surname} isimli teknisyene arızayı onayladı",
                         FaultId = fault.FaultID,
                         OperationDescription = fault.FaultDescription
-                        
-
                     };
                     new FaultLogRepo().Insert(Log);
 
@@ -123,6 +121,7 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 if (teknisyen != null && model.faultState == FaultState.Completed)
                 {
                     fault.FaultState = model.faultState;
+                    fault.FaultResultDate=DateTime.Now;;
                     fault.TechnicianDescription = model.TechnicianDescription;
                     fault.haveJob = false;
                     fault.TechnicianState = TechnicianState.Bosta;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -110,6 +111,15 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     FaultID=model.FaultID,
                 };
                 new FaultRepo().Insert(data);
+                var Log = new FaultLog
+                {
+                    TechnicianId = data.TechnicianId,
+                    CustomerId = data.CustomerId,
+                    Operation = "Arıza kaydı oluşturuldu",
+                    FaultId = data.FaultID,
+                    OperationDescription = data.FaultDescription
+                };
+                new FaultLogRepo().Insert(Log);
                 TempData["Message"] = $"{model.FaultID} no'lu kayıt başarıyla eklenmiştir";
                 return RedirectToAction("Index");
             }
@@ -136,6 +146,14 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
             
+        }
+
+        public async Task<ActionResult> GetMyRecords()
+        {
+            var musteriid = HttpContext.User.Identity.GetUserId();
+            var data = new FaultRepo().GetAll(x => x.CustomerId == musteriid).ToList();
+            return View(data);
+
         }
 
     }
