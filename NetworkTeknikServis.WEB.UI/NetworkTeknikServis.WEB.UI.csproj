@@ -588,6 +588,7 @@
     <Content Include="Views\Technician\FaultTracking.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
     <Content Include="Views\Customer\GetMyRecords.cshtml" />
+    <Content Include="Views\Admin\AdminPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

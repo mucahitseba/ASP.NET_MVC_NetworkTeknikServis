@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using NetworkTeknikServis.BLL.Repository;
 using static NetworkTeknikServis.BLL.Identity.MembershipTools;
 
 namespace NetworkTeknikServis.WEB.UI.Controllers
@@ -254,6 +255,38 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
             }
 
             return RedirectToAction("EditUser", new { id = userId });
+        }
+
+        public ActionResult AdminPanel()
+        {
+            var data = new FaultRepo().GetAll();
+            return View(data);
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetDetail(Guid id)
+        {
+            try
+            {
+                var fault = new FaultRepo().GetById(id);
+                var faults = new FaultRepo().GetAll(x => x.FaultID == fault.FaultID);
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+                var operatorr=await NewUserStore().FindByIdAsync(fault.OperatorId);
+                var teknisyen = await NewUserStore().FindByIdAsync(fault.TechnicianId);
+
+                return Json(new ResponseData()
+                {
+                    data = new { fault,customer,operatorr,teknisyen,faults},
+                    success = true,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResponseData()
+                {
+                    success = false,
+                    message = $"Bir hata olustu {ex.Message}"
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

@@ -10,9 +10,12 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using NetworkTeknikServis.BLL.Helpers;
 using NetworkTeknikServis.BLL.Repository;
+using NetworkTeknikServis.BLL.Services.Senders;
 using NetworkTeknikServis.MODELS.Entities;
 using NetworkTeknikServis.MODELS.Enums;
 using NetworkTeknikServis.MODELS.ViewModels;
+using static NetworkTeknikServis.BLL.Identity.MembershipTools;
+
 
 namespace NetworkTeknikServis.WEB.UI.Controllers
 {
@@ -27,10 +30,12 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult FaultCreate(FaultViewModel model)
+        public async Task<ActionResult> FaultCreate(FaultViewModel model)
         {
             //o anki sistemdeki kullanıcının idsini verir. 
+
             var MusteriId = HttpContext.User.Identity.GetUserId();
+
 
             //if (!ModelState.IsValid)
             //{
@@ -120,8 +125,18 @@ namespace NetworkTeknikServis.WEB.UI.Controllers
                     OperationDescription = data.FaultDescription
                 };
                 new FaultLogRepo().Insert(Log);
+
+                var fault = new FaultRepo().GetById(data.FaultID);
+                var customer = await NewUserStore().FindByIdAsync(fault.CustomerId);
+                string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                                 (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                var emailService = new EmailService();
+                var body = $"Merhaba <b>{data.FaultID} nolu Arıza kaydınız alınmıştır";
+                await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Arıza Kaydı" }, customer.Email);
                 TempData["Message"] = $"{model.FaultID} no'lu kayıt başarıyla eklenmiştir";
                 return RedirectToAction("Index");
+
             }
             catch (DbEntityValidationException ex)
             {
