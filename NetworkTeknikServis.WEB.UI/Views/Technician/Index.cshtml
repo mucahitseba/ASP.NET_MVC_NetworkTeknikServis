@@ -18,7 +18,7 @@
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h2>Teknisyen Sayfası</h2>
+                <h2>Teknisyen İş Durumu</h2>
                 <br/>
                 <br/>
                 <p class="text-muted">@Html.ValidationSummary()</p>
@@ -34,10 +34,12 @@
                             <th>Kayıt Oluşturan Ad</th>
                             <th>Kayıt Oluşturan Soyad</th>
                             <th>Eklendigi Tarih</th>
+                            <th>Bitiş Tarihi</th>
+
                             <th>Adres</th>
                             <th>Arıza Açıklaması</th>
                             <th>Arıza Durumu</th>
-                            <th class="text-center" style="width: 10%;">Actions</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -47,23 +49,18 @@
                             var data = MembershipTools.GetMusteri(Model[i].CustomerId);
                             var data2 = Model[i];
                             @*<tr class="@(data.EmailConfirmed?"":"bg-yellow")">*@
-                            <tr class="@(data2.FaultState == FaultState.Completed ? "success" : "danger")">
-                                <td class="text-center">@data2.FaultID</td>
-                                <td>@data.Name</td>
-                                <td>@data.Surname</td>
-                                <td>@data2.FaultNotifyDate</td>
-                                <td>@data2.Adress</td>
-                                <td>@data2.FaultDescription</td>
-                                <td>@data2.FaultState</td>
+                        <tr class="@(data2.FaultState == FaultState.Completed ? "success" : "danger")">
+                            <td class="text-center">@data2.FaultID</td>
+                            <td>@data.Name</td>
+                            <td>@data.Surname</td>
+                            <td>@data2.FaultNotifyDate</td>
+                            <td>@data2.FaultResultDate</td>
+                            <td>@data2.Adress</td>
+                            <td>@data2.FaultDescription</td>
+                            <td>@data2.FaultState</td>
 
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                            <a href="@Url.Action("Report", "Technician", new {id = data2.FaultID})" class="btn btn-xs btn-default" title="Rapor Gönder">
-                                                <i class="fa fa-send"></i>
-                                            </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            
+                        </tr>
                         }
                     </tbody>
                 </table>
