@@ -1,4 +1,6 @@
-﻿@using NetworkTeknikServis.MODELS.Enums
+﻿@using Microsoft.AspNet.Identity
+@using NetworkTeknikServis.BLL.Identity
+@using NetworkTeknikServis.MODELS.Enums
 @model NetworkTeknikServis.MODELS.Entities.Fault
 @{
     ViewBag.Title = "Index";
@@ -30,82 +32,55 @@
             <div class="card-body">
                 <br />
                 <h2 class="title">OMNet Memnuniyet Anketi</h2>
-                <form id="frmAtama">
-
-                    <div class="input-group col-md-12">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="teknisyen" name="gender">
-                                <option disabled="disabled" selected="selected">@Model.TeknisyenBilgiPuani</option>
-                                <option>@SurveyState.Harika</option>
-                                <option>@SurveyState.İyi</option>
-                                <option>@SurveyState.Orta</option>
-                                <option>@SurveyState.Kötü</option>
-                                <option>@SurveyState.Berbat</option>
-                            </select>
-                            <div class="select-dropdown"></div>
+                @using (Html.BeginForm("ConfirmSurvey", "Survey", new { id = "frmAnket" }))
+                {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("MusteriId", HttpContext.Current.User.Identity.GetUserId())
+                        @Html.HiddenFor(x => x.FaultID)
+                        <div class="input-group col-md-12">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                @Html.LabelFor(x => x.TeknisyenDavranisPuani)
+                                @Html.EnumDropDownListFor(x => x.TeknisyenDavranisPuani, new { @class = "form-control", size = "1" })
+                                <div class="select-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group col-md-12">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="teknisyen" name="gender">
-                                <option disabled="disabled" selected="selected">@Model.TeknisyenBilgiPuani</option>
-                                <option>@SurveyState.Harika</option>
-                                <option>@SurveyState.İyi</option>
-                                <option>@SurveyState.Orta</option>
-                                <option>@SurveyState.Kötü</option>
-                                <option>@SurveyState.Berbat</option>
-                            </select>
-                            <div class="select-dropdown"></div>
+                        <div class="input-group col-md-12">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                @Html.LabelFor(x => x.TeknisyenBilgiPuani)
+                                @Html.EnumDropDownListFor(x => x.TeknisyenBilgiPuani, new { @class = "form-control", size = "1" })
+                                <div class="select-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group col-md-12">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="teknisyen" name="gender">
-                                <option disabled="disabled" selected="selected">@Model.DavranisPuani</option>
-                                <option>@SurveyState.Harika</option>
-                                <option>@SurveyState.İyi</option>
-                                <option>@SurveyState.Orta</option>
-                                <option>@SurveyState.Kötü</option>
-                                <option>@SurveyState.Berbat</option>
-                            </select>
-                            <div class="select-dropdown"></div>
+                        <div class="input-group col-md-12">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                @Html.LabelFor(x => x.OMNetHizmetPuanı)
+                                @Html.EnumDropDownListFor(x => x.OMNetHizmetPuanı, new { @class = "form-control", size = "1" })
+                                <div class="select-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group col-md-12">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="teknisyen" name="gender">
-                                <option disabled="disabled" selected="selected">@Model.OMNetHizmetPuanı</option>
-                                <option>@SurveyState.Harika</option>
-                                <option>@SurveyState.İyi</option>
-                                <option>@SurveyState.Orta</option>
-                                <option>@SurveyState.Kötü</option>
-                                <option>@SurveyState.Berbat</option>
-                            </select>
-                            <div class="select-dropdown"></div>
+                        <div class="input-group col-md-12">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                @Html.LabelFor(x => x.OMNetHakkindakiGorusler)
+                                @Html.EnumDropDownListFor(x => x.OMNetHakkindakiGorusler, new { @class = "form-control", size = "1" })
+                                <div class="select-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="input-group col-md-12">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="teknisyen" name="gender">
-                                <option disabled="disabled" selected="selected">@Model.OMNetHakkindakiGorusler</option>
-                                <option>@SurveyState.Harika</option>
-                                <option>@SurveyState.İyi</option>
-                                <option>@SurveyState.Orta</option>
-                                <option>@SurveyState.Kötü</option>
-                                <option>@SurveyState.Berbat</option>
-                            </select>
-                            <div class="select-dropdown"></div>
+                        <div class="input-group col-md-12">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                @Html.LabelFor(x => x.DavranisPuani)
+                                @Html.EnumDropDownListFor(x => x.DavranisPuani, new { @class = "form-control", size = "1" })
+                                <div class="select-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="p-t-20 col-md-offset-9">
-                        <button class="btn btn--radius btn--blue" type="submit">Gönder</button>
-                    </div>
-                </form>
+                        <div class="p-t-20 col-md-offset-9">
+                            <button class="btn btn--radius btn--blue" type="submit">Gönder</button>
+                        </div>
+                }
             </div>
         </div>
     </div>
@@ -122,5 +97,23 @@
 
     <!-- Main JS-->
     <script src="~/assets/js/global.js"></script>
+
+    @*<script>
+            $("#frmAnket").submit(function (ev) {
+                var soru1 = $("#soru1").val();
+                var soru2 = $("#soru2").val();
+                var soru3 = $("#soru3").val();
+                var soru4 = $("#soru4").val();
+                var soru5 = $("#soru5").val();
+                var data = { TeknisyenBilgiPuani: soru1, TeknisyenDavranisPuani: soru2, DavranisPuani: soru3, OMNetHizmetPuanı: soru4, OMNetHakkindakiGorusler: soru5 };
+
+                $.ajax({
+                    url: "@Url.Action("ConfirmSurvey","Survey")",
+                    method: "post",
+                    dataType: "json",
+                    data: data
+                })
+            });
+        </script>*@
 
 }

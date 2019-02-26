@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NetworkTeknikServis.MODELS.Enums;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetworkTeknikServis.MODELS.Enums;
-using NetworkTeknikServis.MODELS.IdentityModels;
 
 namespace NetworkTeknikServis.MODELS.Entities
 {
@@ -55,7 +50,7 @@ namespace NetworkTeknikServis.MODELS.Entities
         [DisplayName("OMNet hizmetinden memnun Kaldınız mı ?")]
         public SurveyState OMNetHizmetPuanı { get; set; }
         [DisplayName("OMNet Hakkındaki Görüşleriniz.")]
-        public string OMNetHakkindakiGorusler { get; set; }
+        public SurveyState OMNetHakkindakiGorusler { get; set; }
 
         public string SurveyCode { get; set; }
 
